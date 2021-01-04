@@ -1,0 +1,85 @@
+<div class="page-theme primary-background" fxLayoutAlign="center center">
+  <mat-card
+    class="sigin-form secondary-background"
+    fxLayoutAlign="space-between center"
+    fxLayoutGap="20px"
+  >
+    <div @fadeOut class="sigin" fxLayout="column" fxLayoutAlign="center center">
+      <span class="form-title">Sign Up</span>
+      <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field appearance="outline">
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="firstName" type="text" />
+            <mat-error>
+              {{ errorObserver.firstName | async }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="lastName" type="text" />
+            <mat-error>
+              {{ errorObserver.lastName | async }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="userName" type="text" />
+            <mat-error>
+              {{ errorObserver.userName | async }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" />
+            <mat-error>
+              {{ errorObserver.email | async }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="10px">
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" />
+            <mat-error>
+              {{ errorObserver.password | async }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput formControlName="confirmPassword" type="password" />
+            <mat-error>
+              {{ errorObserver.confirmPassword | async }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="full-width form-button-margin"
+        >
+          SignUp
+        </button>
+      </form>
+    </div>
+    <div
+      class="full-height full-width"
+      fxLayoutAlign="center center"
+      fxLayout="column"
+    >
+      <h2 class="title">Already have an account ?</h2>
+      <button
+        mat-stroked-button
+        class="white-button-outline"
+        routerLink="/signin"
+      >
+        Sign In
+      </button>
+    </div>
+  </mat-card>
+</div>

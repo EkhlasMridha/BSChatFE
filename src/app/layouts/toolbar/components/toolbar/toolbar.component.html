@@ -1,0 +1,17 @@
+<mat-toolbar #matToolbar color="primary" fxLayout="row">
+    <mat-toolbar-row>
+        <div *ngIf="showMenuButton" fxLayout="row" fxLayoutAlign="start center">
+            <button mat-icon-button (click)="openDrawer($event)">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span>Root Line</span>
+        </div>
+        <div class="spacer"></div>
+        <div class="nav-items">
+            <div class="item" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center" (click)="signoutUser()">
+                <span>Signout</span>
+                <mat-icon svgIcon="signout" class="color-icon"></mat-icon>
+            </div>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>
