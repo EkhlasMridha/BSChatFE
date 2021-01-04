@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, style, transition, animate } from '@angular/animations';
 import {
   FormGroup,
@@ -8,7 +8,6 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { SignUpModel } from '../../models/signup.model';
-import { filter, map } from 'rxjs/operators';
 import { CoreService } from '@core/core.service';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
@@ -54,7 +53,6 @@ export class SignupComponent implements OnInit {
       this.errorObserver,
       this.generateErrors
     );
-    this.signUpForm.controls['confirmPassword'].disable();
   }
 
   generateErrors(name: string, owner: string) {
@@ -111,17 +109,9 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (!this.signUpForm.valid) {
-      console.log('invalid');
       this.coreService.checkFormState(this.signUpForm);
       return;
     }
     const result = Object.assign({}, this.signUpForm.value);
-    this.signUpModel = result;
-    this.signUpModel.passwordHash = result.password;
-    console.log(this.signUpModel);
-
-    this.authService.signUp(this.signUpModel).subscribe((res) => {
-      console.log(res);
-    });
   }
 }

@@ -5,14 +5,14 @@
       <form class="full-width" fxLayout="column" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="outline">
           <mat-label>First name</mat-label>
-          <input matInput formControlName="firstName" type="text" />
+          <input matInput formControlName="firstname" type="text" />
           <mat-error>
             {{ errorObserver.firstname | async }}
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Last name</mat-label>
-          <input matInput formControlName="lastName" type="text" />
+          <input matInput formControlName="lastname" type="text" />
           <mat-error>
             {{ errorObserver.lastname | async }}
           </mat-error>
