@@ -29,6 +29,9 @@
       ],
       "@contract/*": [
         "src/app/contracts/*"
+      ],
+      "@shared-material/*": [
+        "src/app/shared-materials/*"
       ]
     }
   }

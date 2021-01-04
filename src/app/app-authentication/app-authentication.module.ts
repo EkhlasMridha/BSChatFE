@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { SiginComponent } from './components/sigin/sigin.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SignupComponent } from './components/signup/signup.component';
-import { SharedMaterialModule } from '../shared-modules/shared-materials/shared-material/shared-material.module';
-import { FormsMaterialModule } from '../shared-modules/shared-materials/forms-material/forms-material.module';
+import { SharedMaterialModule } from '@shared-material/shared-material.module';
+import { FormsMaterialModule } from '@shared-material/forms-material.module';
 import { AuthGuardService } from '@route-guard';
 
 const routes: Routes = [

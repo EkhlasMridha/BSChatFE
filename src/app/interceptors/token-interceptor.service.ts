@@ -7,9 +7,10 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { TokenService, TokenModel } from '@core/servcies/token.service';
+import { TokenService } from '@core/servcies/token.service';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { TokenModel } from '@contract/token.model';
 
 @Injectable({
   providedIn: 'root',
