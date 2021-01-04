@@ -1,26 +1,19 @@
 <div class="page-theme primary-background" fxLayoutAlign="center center">
   <mat-card class="sigin-form secondary-background" fxLayoutAlign="space-between center" fxLayoutGap="20px">
-    <div class="full-height full-width" fxLayoutAlign="center center" fxLayout="column">
-      <h2 class="title">Don't have an account ?</h2>
-      <button mat-stroked-button class="white-button-outline" routerLink="/signup">
+    <div @fadeOut class="full-height full-width" fxLayoutAlign="center center" fxLayout="column">
+      <h2 class="title primary-color">Don't have an account ?</h2>
+      <button mat-stroked-button color="primary" routerLink="/signup">
         SignUp Now
       </button>
     </div>
-    <div @fadeOut class="sigin" fxLayout="column" fxLayoutAlign="center center">
+    <div @fadeOut class="sigin" fxLayoutGap="15px" fxLayout="column" fxLayoutAlign="center center">
       <span class="form-title">Sign In</span>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center">
         <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
-          <input matInput formControlName="userName" type="text" />
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="text" />
           <mat-error>
-            {{ errorObserver$.userName | async }}
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <input matInput formControlName="password" type="password" />
-          <mat-error>
-            {{ errorObserver$.password | async }}
+            {{ errorObserver$.email | async }}
           </mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit" class="full-width">

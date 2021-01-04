@@ -6,27 +6,23 @@
   width: calc(100% - 50px);
   height: calc(100% - 200px);
   max-width: 900px;
+  overflow: hidden;
   .sigin {
     display: flex;
-    height: 100%;
-    max-height: 300px;
     background-color: white;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 20px 30px 20px 30px;
     border-radius: 4px;
     box-shadow: 0px 0px 4px 0px #555555;
   }
 }
 
 .title {
-  color: white;
   font-size: 1.5rem;
 }
 
 .form-title {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 30px;
 }
 
 .forgot {

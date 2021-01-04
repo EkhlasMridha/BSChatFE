@@ -35,20 +35,17 @@ export class SignupComponent implements OnInit {
   signUpModel: SignUpModel;
 
   errorObserver = {
-    firstName: null,
-    lastName: null,
-    userName: null,
+    firstname: null,
+    lastname: null,
     email: null,
-    password: null,
-    confirmPassword: null,
   };
 
-  constructor(
+  constructor (
     private formBuilder: FormBuilder,
     private formService: FormService,
     private authService: AuthService,
     private validationService: ValidationService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.signUpForm = this.createForm();
@@ -62,23 +59,15 @@ export class SignupComponent implements OnInit {
 
   generateErrors(name: string, owner: string) {
     switch (owner) {
-      case 'firstName':
+      case 'firstname':
         if (name == 'required') {
           return 'First name is required';
         } else {
           return 'Invalid name';
         }
-      case 'lastName':
+      case 'lastname':
         if (name == 'required') {
           return 'Last name is required';
-        } else {
-          return 'Invalid name';
-        }
-      case 'userName':
-        if (name == 'required') {
-          return 'User name is required';
-        } else if (name == 'isExists') {
-          return 'User name is already taken';
         } else {
           return 'Invalid name';
         }
@@ -90,66 +79,27 @@ export class SignupComponent implements OnInit {
         } else {
           return 'Invalid email';
         }
-      case 'password':
-        if (name == 'required') {
-          return 'Password is required';
-        } else {
-          return 'Must contain both uppercase, lowercase letter and mini length 6, max 12';
-        }
-      case 'confirmPassword':
-        if (name == 'required') {
-          return 'Confirm password is required';
-        } else {
-          return 'Password must be same';
-        }
     }
   }
 
   createForm() {
     return this.formBuilder.group(
       {
-        firstName: [
+        firstname: [
           '',
           Validators.compose([Validators.minLength(3), Validators.required]),
         ],
-        lastName: [
+        lastname: [
           '',
           Validators.compose([Validators.minLength(3), Validators.required]),
-        ],
-        userName: [
-          '',
-          Validators.compose([Validators.minLength(3), Validators.required]),
-          this.validateUserName.bind(this),
         ],
         email: [
           '',
           Validators.compose([Validators.required, Validators.email]),
           this.validateEmail.bind(this),
         ],
-        password: [
-          '',
-          Validators.compose([
-            Validators.required,
-            Validators.pattern(
-              '^(?=.*)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,12}$'
-            ),
-          ]),
-        ],
-        confirmPassword: ['', Validators.required],
       },
-      {
-        validators: [
-          this.MustMatch('password', 'confirmPassword'),
-          this.shoudDisable('password', 'confirmPassword'),
-        ],
-      }
     );
-  }
-
-  validateUserName({
-    value,
-  }: AbstractControl): Observable<ValidationErrors | null> {
-    return this.validationService.isUserNameAvailable(value);
   }
 
   validateEmail({
@@ -158,37 +108,6 @@ export class SignupComponent implements OnInit {
     return this.validationService.isEmailExists(value);
   }
 
-  shoudDisable(value1: string, value2: string) {
-    return (formGroup: FormGroup) => {
-      const firstControl = formGroup.controls[value1];
-      const secondControl = formGroup.controls[value2];
-
-      firstControl.valueChanges.subscribe((res) => {
-        if (res.length < 6 || firstControl.errors) {
-          secondControl.disable({ emitEvent: false, onlySelf: true });
-        } else {
-          secondControl.enable({ emitEvent: false, onlySelf: true });
-        }
-      });
-    };
-  }
-
-  MustMatch(value1: string, value2: string) {
-    return (formGroup: FormGroup) => {
-      const firstControl = formGroup.controls[value1];
-      const secondControl = formGroup.controls[value2];
-
-      if (secondControl.errors && secondControl.errors.mustMatch) {
-        return;
-      }
-
-      if (firstControl.value !== secondControl.value) {
-        return secondControl.setErrors({ mustMatch: true });
-      } else {
-        secondControl.setErrors(null);
-      }
-    };
-  }
 
   onSubmit() {
     if (!this.signUpForm.valid) {
