@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ConfirmationStatusService } from 'src/app/shared-modules/confirmation-status-modal/services/confirmation-status.service';
 import { RootLineToasterService } from 'src/app/shared-modules/root-line-toaster/services/root-line-toaster.service';
-import { IconService } from 'src/app/shared-services/utilities/icon.service';
+import { IconService } from '@core/servcies/icon.service';
 import { TesService } from '../../services/tes.service';
 
 @Component({
@@ -11,12 +11,12 @@ import { TesService } from '../../services/tes.service';
 })
 export class HomeComponent implements OnInit {
   modalRef: any;
-  constructor(
+  constructor (
     private confirmationService: ConfirmationStatusService,
     private iconService: IconService,
     private testService: TesService,
-    private toaster:RootLineToasterService,
-    private ref:ViewContainerRef
+    private toaster: RootLineToasterService,
+    private ref: ViewContainerRef
   ) {
     this.iconService.loadIcons(['like']);
     this.testService.getData().subscribe((res) => {
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   runCommand() {
     // this.confirmationService.openConfirmationModal({
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     //   primaryEvent: this.primaryButton,
     //   secondaryEvent: this.secondaryButton,
     // });
-    this.toaster.dismis()
+    this.toaster.dismis();
   }
 
   primaryButton() {

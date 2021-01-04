@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { SignUpModel } from '../../models/signup.model';
 import { filter, map } from 'rxjs/operators';
-import { FormService } from 'src/app/shared-services/utilities/form.service';
+import { FormService } from '@core/servcies/form.service';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { ValidationService } from '../../services/validation.service';

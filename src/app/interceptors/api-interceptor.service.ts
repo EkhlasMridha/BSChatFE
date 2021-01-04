@@ -6,13 +6,13 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DomainService } from '../utilities/domain.service';
+import { DomainService } from '@core/servcies/domain.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiInterceptorService implements HttpInterceptor {
-  constructor() {}
+  constructor () { }
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler

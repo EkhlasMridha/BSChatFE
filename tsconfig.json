@@ -15,6 +15,18 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@route-guard": [
+        "src/app/route-guards/auth-guard.service"
+      ],
+      "@interceptor/*": [
+        "src/app/interceptors/*"
+      ],
+      "@core/*": [
+        "src/app/core/*",
+        "src/app/core/services/*"
+      ]
+    }
   }
 }

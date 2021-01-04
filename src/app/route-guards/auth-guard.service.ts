@@ -8,14 +8,14 @@ import {
   ActivatedRouteSnapshot,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { TokenService } from '../utilities/token.service';
+import { TokenService } from '@core/servcies/token.service';
 import * as permission from './permissions.route';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuardService implements CanActivate, CanActivateChild {
-  constructor(private tokenService: TokenService, private router: Router) {}
+  constructor (private tokenService: TokenService, private router: Router) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,

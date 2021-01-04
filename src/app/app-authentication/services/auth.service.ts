@@ -13,20 +13,19 @@ import {
 import {
   TokenService,
   TokenModel,
-} from 'src/app/shared-services/utilities/token.service';
+} from "@core/servcies/token.service";
 import { throwError, of } from 'rxjs';
-import { ErrorHandlerService } from 'src/app/shared-services/utilities/error-handler.service';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
+  constructor (
     private http: HttpClient,
     private tokenService: TokenService,
     private router: Router
-  ) {}
+  ) { }
 
   signUp(payload: SignUpModel) {
     return this.http.post('identity/signup', payload).pipe(
