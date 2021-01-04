@@ -9,6 +9,7 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { interceptorProvider } from '@interceptor/interceptor.provider';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
+import { CoreModule } from '@core/core.module';
 
 export function initializer(domainService: DomainService) {
   return () => {
@@ -30,6 +31,7 @@ export function initializer(domainService: DomainService) {
     RootRoutingModule,
     BrowserAnimationsModule,
     AppLoaderModule,
+    CoreModule,
     ToastrModule.forRoot(),
   ],
   providers: [

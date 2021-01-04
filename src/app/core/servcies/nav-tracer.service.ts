@@ -13,7 +13,7 @@ export class NavTracerService {
   private routeBroadcaster: BehaviorSubject<string> = new BehaviorSubject<string>('');
   routeReceiver = this.routeBroadcaster.asObservable();
   private separator;
-  constructor(private titleService: Title, private router: Router) {}
+  constructor (private titleService: Title, private router: Router) { }
 
   setTitle(
     routes: ActivatedRoute,
@@ -52,8 +52,8 @@ export class NavTracerService {
               ? ''
               : navName
             : navName == ''
-            ? navName
-            : this.separator + navName;
+              ? navName
+              : this.separator + navName;
       }
 
       return this.generateNavTrace(child, navTrace);
@@ -66,6 +66,6 @@ export class NavTracerService {
       let segmentGroup: UrlSegmentGroup = urlTree.root.children[PRIMARY_OUTLET];
       let urlSegments: UrlSegment[] = segmentGroup.segments;
       this.routeBroadcaster.next(urlSegments[0].path);
-    })
+    });
   }
 }

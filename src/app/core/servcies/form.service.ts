@@ -6,7 +6,7 @@ import { filter, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class FormService {
-  constructor() {}
+  constructor () { }
 
   handleFormError(
     formGorup: FormGroup,

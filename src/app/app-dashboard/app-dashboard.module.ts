@@ -4,7 +4,6 @@ import { HomeComponent } from './components/home/home.component';
 import { Routes, RouterModule } from '@angular/router';
 import { SharedMaterialModule } from '../shared-modules/shared-materials/shared-material/shared-material.module';
 import { ConfirmationStatusModalModule } from '../shared-modules/confirmation-status-modal/confirmation-status-modal.module';
-import { HttpClientModule } from '@angular/common/http';
 import { RootLineToasterModule } from '../shared-modules/root-line-toaster/root-line-toaster.module';
 
 const routes: Routes = [
@@ -29,4 +28,4 @@ const routes: Routes = [
     RootLineToasterModule
   ],
 })
-export class AppDashboardModule {}
+export class AppDashboardModule { }

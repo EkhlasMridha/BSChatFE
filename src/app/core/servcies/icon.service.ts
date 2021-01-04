@@ -6,10 +6,10 @@ import { DomSanitizer } from '@angular/platform-browser';
   providedIn: 'root',
 })
 export class IconService {
-  constructor(
+  constructor (
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   private iconsPath: string = '../../../assets/icons';
 

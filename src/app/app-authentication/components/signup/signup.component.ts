@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { SignUpModel } from '../../models/signup.model';
 import { filter, map } from 'rxjs/operators';
-import { FormService } from '@core/servcies/form.service';
+import { CoreService } from '@core/core.service';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { ValidationService } from '../../services/validation.service';
@@ -42,14 +42,14 @@ export class SignupComponent implements OnInit {
 
   constructor (
     private formBuilder: FormBuilder,
-    private formService: FormService,
+    private coreService: CoreService,
     private authService: AuthService,
     private validationService: ValidationService
   ) { }
 
   ngOnInit(): void {
     this.signUpForm = this.createForm();
-    this.formService.handleFormError(
+    this.coreService.handleFormError(
       this.signUpForm,
       this.errorObserver,
       this.generateErrors
@@ -112,7 +112,7 @@ export class SignupComponent implements OnInit {
   onSubmit() {
     if (!this.signUpForm.valid) {
       console.log('invalid');
-      this.formService.checkFormStatus(this.signUpForm);
+      this.coreService.checkFormState(this.signUpForm);
       return;
     }
     const result = Object.assign({}, this.signUpForm.value);

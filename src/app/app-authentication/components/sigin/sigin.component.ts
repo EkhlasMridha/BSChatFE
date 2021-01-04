@@ -4,9 +4,8 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl,
 } from '@angular/forms';
-import { FormService } from '@core/servcies/form.service';
+import { CoreService } from '@core/core.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -34,13 +33,13 @@ export class SiginComponent implements OnInit {
 
   constructor (
     private formBuilder: FormBuilder,
-    private formService: FormService,
+    private coreService: CoreService,
     private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.loginForm = this.createForm();
-    this.formService.handleFormError(
+    this.coreService.handleFormError(
       this.loginForm,
       this.errorObserver$,
       this.errorTypeGenerator
@@ -62,7 +61,7 @@ export class SiginComponent implements OnInit {
 
   onSubmit() {
     if (!this.loginForm.valid) {
-      this.formService.checkFormStatus(this.loginForm);
+      this.coreService.checkFormState(this.loginForm);
       return;
     }
     const result = Object.assign({}, this.loginForm.value);
