@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CoreService } from '@core/core.service';
 
@@ -8,8 +8,6 @@ import { CoreService } from '@core/core.service';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  @Input() showMenuButton: boolean;
-  @Output() menuButton: EventEmitter<MouseEvent> = new EventEmitter();
   constructor (
     private coreService: CoreService,
     private router: Router
@@ -22,10 +20,6 @@ export class ToolbarComponent implements OnInit {
   signoutUser() {
     this.coreService.removeToken();
     this.router.navigate(['']);
-  }
-
-  openDrawer(event) {
-    this.menuButton.emit(event);
   }
 
 }
