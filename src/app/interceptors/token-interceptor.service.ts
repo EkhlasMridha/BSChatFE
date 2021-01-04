@@ -43,7 +43,7 @@ export class TokenInterceptorService implements HttpInterceptor {
   ): HttpRequest<any> {
     request = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${token.accessToken}`,
+        Authorization: `Bearer ${token.token}`,
       },
     });
 

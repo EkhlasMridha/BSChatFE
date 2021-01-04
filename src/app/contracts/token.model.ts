@@ -1,3 +1,3 @@
 export interface TokenModel {
-    accessToken: string;
+    token: string;
 }

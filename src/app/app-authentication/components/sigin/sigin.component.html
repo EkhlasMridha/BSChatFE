@@ -11,12 +11,12 @@
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="text" />
+          <input matInput formControlName="mail" type="email" />
           <mat-error>
-            {{ errorObserver$.email | async }}
+            {{ errorObserver$.mail | async }}
           </mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" class="full-width">
+        <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="isLoading">
           SignIn
         </button>
       </form>

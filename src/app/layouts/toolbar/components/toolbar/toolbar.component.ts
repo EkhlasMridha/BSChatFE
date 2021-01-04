@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IconService } from '@core/servcies/icon.service';
+import { Router } from '@angular/router';
+import { CoreService } from '@core/core.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -10,15 +11,17 @@ export class ToolbarComponent implements OnInit {
   @Input() showMenuButton: boolean;
   @Output() menuButton: EventEmitter<MouseEvent> = new EventEmitter();
   constructor (
-    private iconService: IconService
+    private coreService: CoreService,
+    private router: Router
   ) {
-    this.iconService.loadIcons(['signout']);
+    this.coreService.loadIcons(['signout']);
   }
 
   ngOnInit(): void { }
 
   signoutUser() {
-
+    this.coreService.removeToken();
+    this.router.navigate(['']);
   }
 
   openDrawer(event) {

@@ -9,7 +9,7 @@ export class TokenService {
   constructor (private jwtService: JwtHelperService) { }
 
   storeToken(token: TokenModel) {
-    localStorage.setItem(this.accessToken, token.accessToken);
+    localStorage.setItem(this.accessToken, token.token);
   }
 
   removeToken() {
@@ -23,7 +23,7 @@ export class TokenService {
     }
 
     let token: TokenModel = {
-      accessToken: access,
+      token: access,
     };
 
     return token;

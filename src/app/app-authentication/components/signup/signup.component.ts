@@ -7,11 +7,12 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { SignUpModel } from '../../models/signup.model';
 import { CoreService } from '@core/core.service';
+import { SignUpModel } from '../../models/signup.model';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
 import { ValidationService } from '../../services/validation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -32,18 +33,20 @@ import { ValidationService } from '../../services/validation.service';
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
   signUpModel: SignUpModel;
+  isLoading: boolean;
 
   errorObserver = {
     firstname: null,
     lastname: null,
-    email: null,
+    mail: null,
   };
 
   constructor (
     private formBuilder: FormBuilder,
     private coreService: CoreService,
     private authService: AuthService,
-    private validationService: ValidationService
+    private validationService: ValidationService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -69,9 +72,9 @@ export class SignupComponent implements OnInit {
         } else {
           return 'Invalid name';
         }
-      case 'email':
+      case 'mail':
         if (name == 'required') {
-          return 'Email is required';
+          return 'mail is required';
         } else if (name == 'isExists') {
           return 'Already has an account with this email';
         } else {
@@ -91,10 +94,10 @@ export class SignupComponent implements OnInit {
           '',
           Validators.compose([Validators.minLength(3), Validators.required]),
         ],
-        email: [
+        mail: [
           '',
           Validators.compose([Validators.required, Validators.email]),
-          this.validateEmail.bind(this),
+          // this.validateEmail.bind(this),
         ],
       },
     );
@@ -113,5 +116,14 @@ export class SignupComponent implements OnInit {
       return;
     }
     const result = Object.assign({}, this.signUpForm.value);
+    console.log(result);
+
+    this.isLoading = true;
+    this.authService.signUp(result).subscribe(res => {
+      console.log(res);
+      console.log("Signed up");
+      this.isLoading = false;
+      this.router.navigate(["signin"]);
+    });
   }
 }

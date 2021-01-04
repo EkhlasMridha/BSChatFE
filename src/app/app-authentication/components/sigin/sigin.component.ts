@@ -26,9 +26,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class SiginComponent implements OnInit {
   loginForm: FormGroup;
+  isLoading: boolean;
 
   errorObserver$ = {
-    email: '',
+    mail: '',
   };
 
   constructor (
@@ -48,14 +49,14 @@ export class SiginComponent implements OnInit {
 
   errorTypeGenerator(type: string, owner: string) {
     switch (owner) {
-      case 'email':
+      case 'mail':
         return 'Email is required';
     }
   }
 
   createForm() {
     return this.formBuilder.group({
-      email: ['', Validators.required],
+      mail: ['', Validators.required],
     });
   }
 
@@ -67,8 +68,10 @@ export class SiginComponent implements OnInit {
     const result = Object.assign({}, this.loginForm.value);
     console.log(result);
 
+    this.isLoading = true;
     this.authService.signin(result).subscribe((res) => {
       console.log(res);
+      this.isLoading = false;
     });
   }
 }
