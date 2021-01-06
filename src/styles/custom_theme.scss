@@ -18,6 +18,7 @@ $custom-theme: mat-light-theme(
 /* theme color pallet classes */
 
 $primary-color: map-get($custom-theme, primary);
+$accent-color: map-get($custom-theme, accent);
 
 .primary-background {
   background-color: mat-color($primary-color, default);
@@ -29,6 +30,10 @@ $primary-color: map-get($custom-theme, primary);
 
 .primary-background-override {
   background-color: mat-color($primary-color, default) !important;
+}
+
+.accent-color{
+  color: mat-color($accent-color, default);
 }
 
 .color-white-override{

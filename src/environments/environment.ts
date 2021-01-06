@@ -7,6 +7,7 @@ export const environment = {
   AppName: 'Root-Line',
 
   apiHost: 'http://localhost:6326/v1/',
+  hubUrl: "http://localhost:6326/chat",
   RefreshError: 'REFRESH_EXPIRE',
 };
 

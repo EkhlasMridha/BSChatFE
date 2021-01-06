@@ -6,6 +6,7 @@ import { FormService } from './servcies/form.service';
 import { IconService } from './servcies/icon.service';
 import { NavTracerService } from './servcies/nav-tracer.service';
 import { TokenService } from './servcies/token.service';
+import { SignalrService } from './services/signalr.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class CoreService {
   private _formService: FormService;
   private _navTracerService: NavTracerService;
   private _iconService: IconService;
+  private _signalRService: SignalrService;
 
   constructor (private injector: Injector) { }
 
@@ -44,6 +46,13 @@ export class CoreService {
       this._navTracerService = this.injector.get(NavTracerService);
     }
     return this._navTracerService;
+  }
+
+  get signalRService() {
+    if (!this._signalRService) {
+      this._signalRService = this.injector.get(SignalrService);
+    }
+    return this._signalRService;
   }
 
   setTitle(routes: ActivatedRoute,
@@ -93,5 +102,9 @@ export class CoreService {
 
   isTokenExpired() {
     return this.tokenServie.isTokenExpired();
+  }
+
+  startSignalRConnection() {
+    this.signalRService.startConnection();
   }
 }

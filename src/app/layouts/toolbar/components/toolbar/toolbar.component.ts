@@ -19,7 +19,7 @@ export class ToolbarComponent implements OnInit {
 
   signoutUser() {
     this.coreService.removeToken();
-    this.router.navigate(['']);
+    this.router.navigate(['signin']);
   }
 
 }
