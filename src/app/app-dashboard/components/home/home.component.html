@@ -7,8 +7,15 @@
         <h3 class="accent-color">Messages</h3>
 
     </section>
-    <section fxFlex="20" class="messages">
+    <section fxFlex="20" fxLayout="column" class="messages">
         <h3 class="accent-color">Users</h3>
-
+        <mat-nav-list>
+            <mat-list-item *ngFor="let user of userList">
+                <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+                    <img class="avatar" src="../../../../assets/images/avatar.jpg" alt="">
+                    <span class="user-name">{{user.firstName}} {{user.lastName}}</span>
+                </div>
+            </mat-list-item>
+        </mat-nav-list>
     </section>
 </div>

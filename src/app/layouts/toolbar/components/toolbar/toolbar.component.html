@@ -4,7 +4,11 @@
             <span>Root Line</span>
         </div>
         <div class="spacer"></div>
-        <div class="nav-items">
+
+        <div class="nav-items" fxLayout="row" fxLayoutGap="15px">
+            <div *ngIf="user" class="color-white">
+                <span>{{user.firstName}} {{user.lastName}}</span>
+            </div>
             <div class="item" fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="center center" (click)="signoutUser()">
                 <mat-icon svgIcon="signout" class="color-icon"></mat-icon>
             </div>
