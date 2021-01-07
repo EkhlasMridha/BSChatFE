@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   message: string;
   messageGroup: MessageGroup;
   messageList: Partial<TextMessageModel>[] = [];
-  oldMessages: SharedMessageModel[];
+  oldMessages: MessageGroup[];
   id: number;
   groupId: number;
 
@@ -151,11 +151,6 @@ export class HomeComponent implements OnInit {
       })
     );
   }
-
-  // getSelectedUser() {
-  //   let id = parseInt(this.route.snapshot.queryParams.id);
-
-  // }
 
   prepareMessageGroup(text: string) {
     let group: Partial<MessageGroup> = {};

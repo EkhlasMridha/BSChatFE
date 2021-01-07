@@ -1,20 +1,23 @@
 <div class="full-width pages" fxLayout="row">
-    <section fxFlex="20" class="messages">
+    <section style="padding-right: 10px;" fxFlex="20" class="messages" fxLayout="column">
         <h3 class="accent-color">Old messages</h3>
-
+        <div fxLayout="column" fxLayoutGap="10px" *ngIf="oldMessages">
+            <div fxLayout="row" class="message-name" *ngFor="let old of oldMessages">
+                <span class="">Name</span>
+            </div>
+        </div>
     </section>
     <section fxFlex="60" fxLayout="column" class="">
         <h3 class="accent-color">Messages</h3>
-        <div class="accent-background color-white msg-header" fxLayout="row" fxLayoutGap="15px"
-            fxLayoutAlign="start center" *ngIf="selectedUser">
+        <div class="color-white msg-header" fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="start center"
+            *ngIf="selectedUser">
             <img class="avatar" src="../../../../assets/images/avatar.jpg" alt="">
             <span class="user-name">{{selectedUser.firstName}} {{selectedUser.lastName}}</span>
         </div>
         <div class="message-box">
-            <div class="full-height" style="padding: 10px;" fxLayoutAlign="end end" *ngIf="messageGroup">
+            <div class="as" style="padding-bottom: 5px;" fxLayoutAlign="end end" *ngIf="messageGroup">
                 <div #textContainer class="tex-container full-width">
                     <div class="full-height" fxLayout="column" fxLayoutAlign="end end" fxLayoutGap="10px">
-
                         <ng-container *ngFor="let message of messageList">
                             <div class="full-width" fxLayoutAlign="start start" *ngIf="message.ownerId==id">
                                 <div class="message-container gray-background">
@@ -33,7 +36,7 @@
         </div>
         <div class="message-bar" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
             <textarea class="text-bar" [(ngModel)]="message" matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
-                cdkAutosizeMaxRows="3"></textarea>
+                cdkAutosizeMaxRows="2"></textarea>
             <button mat-mini-fab color="accent" (click)="sendMessage()">
                 <mat-icon>send</mat-icon>
             </button>

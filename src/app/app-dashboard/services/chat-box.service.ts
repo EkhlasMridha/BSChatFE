@@ -42,7 +42,7 @@ export class ChatBoxService {
   }
 
   getOldMessages() {
-    return this.http.get<SharedMessageModel[]>("chat/old");
+    return this.http.get<MessageGroup[]>("chat/old");
   }
 
   getOldText(id: number) {
