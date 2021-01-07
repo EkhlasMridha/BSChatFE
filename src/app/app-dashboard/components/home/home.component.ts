@@ -204,4 +204,10 @@ export class HomeComponent implements OnInit {
     let index = this.newMesasge.indexOf(message);
     this.newMesasge.splice(index, 1);
   }
+
+  getUserFromId(id: number) {
+    let value: UserModel = this.userList.find(user => user.id == id);
+    console.log(id);
+    return value.firstName + " " + value.lastName;
+  }
 }

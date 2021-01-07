@@ -2,8 +2,10 @@
     <section style="padding-right: 10px;" fxFlex="20" class="messages" fxLayout="column">
         <div fxLayout="column" style="padding-bottom: 10px;" *ngIf="newMesasge.length!=0">
             <h3 class="accent-color">New Message</h3>
-            <div fxLayout="row" fxLayoutAlign="start start" class="message-name cursor-pointer"
+            <div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start start" class="message-name cursor-pointer"
                 *ngFor="let message of newMesasge" (click)="selectMessage(message)">
+                <span
+                    class="bold-name primary-color">{{getUserFromId(message.textMessages[message.textMessages.length-1].ownerId)}}</span>
                 <span class="bold-message">{{message.textMessages[message.textMessages.length-1].sentMessage}}</span>
             </div>
         </div>
