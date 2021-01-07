@@ -14,7 +14,7 @@ const routes: Routes = [
         (module) => module.AppDashboardModule
       ),
     data: {
-      breadCrumb: 'Dashboard',
+      breadCrumb: 'Chat Box',
     },
     canActivateChild: [AuthGuardService],
   },

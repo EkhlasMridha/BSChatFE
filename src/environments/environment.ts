@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  AppName: 'Root-Line',
+  AppName: 'Messenger',
 
   apiHost: 'http://localhost:6326/v1/',
   hubUrl: "http://localhost:6326/chat",

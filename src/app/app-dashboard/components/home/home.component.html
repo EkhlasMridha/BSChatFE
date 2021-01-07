@@ -5,9 +5,14 @@
     </section>
     <section fxFlex="60" fxLayout="column" class="">
         <h3 class="accent-color">Messages</h3>
+        <div class="accent-background color-white msg-header" fxLayout="row" fxLayoutGap="15px"
+            fxLayoutAlign="start center" *ngIf="selectedUser">
+            <img class="avatar" src="../../../../assets/images/avatar.jpg" alt="">
+            <span class="user-name">{{selectedUser.firstName}} {{selectedUser.lastName}}</span>
+        </div>
         <div class="message-box">
             <div class="full-height" style="padding: 10px;" fxLayoutAlign="end end" *ngIf="messageGroup">
-                <div class="tex-container full-width">
+                <div #textContainer class="tex-container full-width">
                     <div class="full-height" fxLayout="column" fxLayoutAlign="end end" fxLayoutGap="10px">
 
                         <ng-container *ngFor="let message of messageList">

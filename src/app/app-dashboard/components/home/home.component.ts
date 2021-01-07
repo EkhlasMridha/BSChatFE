@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageGroup } from '@contract/message-group.model';
 import { SharedMessageModel } from '@contract/shared-message.model';
@@ -18,7 +18,7 @@ import { ChatBoxService } from '../../services/chat-box.service';
 })
 export class HomeComponent implements OnInit {
   selectedUser: UserModel = null;
-  userList: UserModel[];
+  userList: UserModel[] = [];
   displayProfile: boolean = false;
   currentUser: UserModel;
   message: string;
@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit {
   oldMessages: SharedMessageModel[];
   id: number;
   groupId: number;
+
+  @ViewChild('textContainer') private textContainer: ElementRef;
   constructor (
     private coreService: CoreService,
     private signalRService: SignalrService,
@@ -45,10 +47,28 @@ export class HomeComponent implements OnInit {
     this.getuser();
     this.getOldMessages();
     this.id = parseInt(this.route.snapshot.queryParams.id);
+    this.getSelectedUser(this.id);
+  }
+
+  ngAfterContentChecked(): void {
+    if (this.textContainer) {
+      this.textContainer.nativeElement.scrollTop = this.textContainer.nativeElement.scrollHeight;
+    }
   }
 
   getUserList() {
-    this.chatBoxService.getUserList().subscribe(res => {
+    this.chatBoxService.getUserList().pipe(
+      tap(res => {
+        if (!this.selectedUser && this.id) {
+          this.selectedUser = res.find(res => {
+            if (res.id == this.id) {
+              return res;
+            }
+          });
+          console.log(this.selectedUser);
+        }
+      })
+    ).subscribe(res => {
       this.userList = res;
       console.log(res);
     });
@@ -71,7 +91,11 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["."], { relativeTo: this.route, queryParams: { id: user.id } });
     this.id = user.id;
 
-    this.chatBoxService.getOldText(user.id).subscribe(res => {
+    this.getSelectedUser(user.id);
+  }
+
+  getSelectedUser(id: number) {
+    this.chatBoxService.getOldText(id).subscribe(res => {
       console.log(res);
       if (res == null) {
         this.displayProfile = true;
@@ -128,10 +152,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  getSelectedUser() {
-    let id = parseInt(this.route.snapshot.queryParams.id);
+  // getSelectedUser() {
+  //   let id = parseInt(this.route.snapshot.queryParams.id);
 
-  }
+  // }
 
   prepareMessageGroup(text: string) {
     let group: Partial<MessageGroup> = {};
