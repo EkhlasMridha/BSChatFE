@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageGroup } from '@contract/message-group.model';
 import { OldMessageModel } from '@contract/old-message.model';
-import { SharedMessageModel } from '@contract/shared-message.model';
 import { TextMessageModel } from '@contract/text-message.model';
 import { UserModel } from '@contract/user.model';
 import { CoreService } from '@core/core.service';
@@ -93,10 +91,14 @@ export class HomeComponent implements OnInit {
 
   listenToMessage() {
     this.signalRService.chat.subscribe(res => {
-      if (res.senderId == this.currentUser.id || res.senderId == this.selectedUser.id) {
+      if (res.senderId == this.currentUser.id) {
         this.messageGroup.textMessages.push(res.textMessages);
         this.messageList.push(res.textMessages[0]);
-      } else {
+      } else if (this.selectedUser && res.senderId == this.selectedUser.id) {
+        this.messageGroup.textMessages.push(res.textMessages);
+        this.messageList.push(res.textMessages[0]);
+      }
+      else {
         this.newMesasge.push(res);
       }
     });
@@ -111,6 +113,9 @@ export class HomeComponent implements OnInit {
   }
 
   getSelectedUser(id: number) {
+    if (!id) {
+      return;
+    }
     this.chatBoxService.getOldText(id).subscribe(res => {
       console.log(res);
       if (res == null) {
