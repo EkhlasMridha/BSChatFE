@@ -27,3 +27,62 @@ h3{
 .user-name{
   font-size: 16px;
 }
+
+.message-box{
+  display: flex;
+  flex:  1 0 auto;
+  flex-direction: column;
+  width: 100%;
+  .scroller{
+    display: flex;
+    flex:  1 1 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+.border-page{
+  border: 1px solid #cecece;
+}
+
+.tex-container{
+  max-height: 65vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.message-bar{
+  display: flex;
+  width: 100%;
+ .text-bar{
+   border: 1px solid #5b2a86;
+    border-radius: 4px;
+    padding: 8px;
+    width: 100%;
+   &:focus{
+     outline: none;
+     border-width: 2px;
+   }
+ }
+}
+
+.profile-img{
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+
+.name{
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.message-container{
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 1px 1px 2px 1px #a7a7a7;
+}
+
+.message-maker{
+  display: flex;
+}

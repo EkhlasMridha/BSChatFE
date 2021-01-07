@@ -1,8 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageGroup } from '@contract/message-group.model';
+import { SharedMessageModel } from '@contract/shared-message.model';
+import { TextMessageModel } from '@contract/text-message.model';
 import { UserModel } from '@contract/user.model';
 import { CoreService } from '@core/core.service';
+import { DataStateService } from '@core/servcies/data-state.service';
 import { SignalrService } from '@core/services/signalr.service';
+import { switchMap, tap } from 'rxjs/operators';
 import { ChatBoxService } from '../../services/chat-box.service';
 
 @Component({
@@ -11,36 +17,143 @@ import { ChatBoxService } from '../../services/chat-box.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  modalRef: any;
+  selectedUser: UserModel = null;
   userList: UserModel[];
+  displayProfile: boolean = false;
+  currentUser: UserModel;
+  message: string;
+  messageGroup: MessageGroup;
+  messageList: Partial<TextMessageModel>[] = [];
+  oldMessages: SharedMessageModel[];
+  id: number;
+  groupId: number;
   constructor (
     private coreService: CoreService,
-    private chatService: SignalrService,
-    private userService: ChatBoxService,
+    private signalRService: SignalrService,
+    private chatBoxService: ChatBoxService,
+    private dataState: DataStateService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.coreService.loadIcons(['like']);
   }
 
   ngOnInit(): void {
-    this.chatService.startConnection();
+    this.signalRService.startConnection();
     this.listenToMessage();
     this.getUserList();
-  }
-
-  send() {
-
+    this.getuser();
+    this.getOldMessages();
+    this.id = parseInt(this.route.snapshot.queryParams.id);
   }
 
   getUserList() {
-    this.userService.getUserList().subscribe(res => {
+    this.chatBoxService.getUserList().subscribe(res => {
       this.userList = res;
       console.log(res);
     });
   }
 
   listenToMessage() {
-    this.chatService.chat.subscribe(res => {
+    this.signalRService.chat.subscribe(res => {
+      // console.log(res);
+      // console.log(this.currentUser);
+      // console.log(this.selectedUser);
+      if (res.senderId == this.currentUser.id || res.senderId == this.selectedUser.id) {
+        this.messageGroup.textMessages.push(res.textMessages);
+        this.messageList.push(res.textMessages[0]);
+      }
+    });
+  }
+
+  selectUser(user: UserModel) {
+    this.selectedUser = user;
+    this.router.navigate(["."], { relativeTo: this.route, queryParams: { id: user.id } });
+    this.id = user.id;
+
+    this.chatBoxService.getOldText(user.id).subscribe(res => {
       console.log(res);
+      if (res == null) {
+        this.displayProfile = true;
+        this.messageList = [];
+      } else {
+        this.messageGroup = res;
+        this.messageList = this.messageGroup.textMessages;
+      }
+      this.groupId = res ? res.id : 0;
+    });
+  }
+
+  getuser() {
+    this.dataState.userState$.subscribe(res => {
+      this.currentUser = res;
+    });
+  }
+
+  sendMessage() {
+    this.displayProfile = false;
+    let group = this.prepareMessageGroup(this.message);
+    group.textMessages = [];
+    let payload = this.prepareMessage(this.message);
+    group.textMessages.push(payload);
+
+    let path: "new" | "exist" = this.groupId == 0 ? 'new' : "exist";
+
+    if (path == "new") {
+      this.sendMessageWithgroup(group).subscribe(res => {
+        this.messageGroup.textMessages = [];
+        this.messageGroup.textMessages.push(res);
+        //this.messageList.push(res);
+      });
+    } else {
+      this.chatBoxService.sendMessage("text", group).subscribe(res => {
+        console.log(res);
+      });
+    }
+
+    this.message = "";
+  }
+
+  sendMessageWithgroup(group: Partial<MessageGroup>) {
+    return this.chatBoxService.createGroup(group).pipe(
+      switchMap(res => {
+        this.groupId = res.id;
+        this.messageGroup = res;
+
+        let payload = this.prepareMessage(group.textMessages[0].sentMessage);
+        res.textMessages = [];
+        res.textMessages.push(payload);
+        return this.chatBoxService.sendMessage("text", res);
+      })
+    );
+  }
+
+  getSelectedUser() {
+    let id = parseInt(this.route.snapshot.queryParams.id);
+
+  }
+
+  prepareMessageGroup(text: string) {
+    let group: Partial<MessageGroup> = {};
+    group.senderId = this.currentUser.id;
+    group.receiverId = this.id;
+    return group;
+  }
+
+  prepareMessage(text: string) {
+    let message: Partial<TextMessageModel> = {};
+    message.ownerId = this.currentUser.id;
+    message.sentMessage = text;
+    if (this.groupId != 0) {
+      message.groupId = this.groupId;
+    }
+    return message;
+  }
+
+  getOldMessages() {
+    this.chatBoxService.getOldMessages().subscribe(res => {
+      this.oldMessages = res;
+      console.log(this.oldMessages);
     });
   }
 }

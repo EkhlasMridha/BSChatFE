@@ -3,14 +3,41 @@
         <h3 class="accent-color">Old messages</h3>
 
     </section>
-    <section fxFlex="60" class="">
+    <section fxFlex="60" fxLayout="column" class="">
         <h3 class="accent-color">Messages</h3>
+        <div class="message-box">
+            <div class="full-height" style="padding: 10px;" fxLayoutAlign="end end" *ngIf="messageGroup">
+                <div class="tex-container full-width">
+                    <div class="full-height" fxLayout="column" fxLayoutAlign="end end" fxLayoutGap="10px">
 
+                        <ng-container *ngFor="let message of messageList">
+                            <div class="full-width" fxLayoutAlign="start start" *ngIf="message.ownerId==id">
+                                <div class="message-container gray-background">
+                                    <span>{{message.sentMessage}}</span>
+                                </div>
+                            </div>
+                            <div class="full-width" fxLayoutAlign="end end" *ngIf="message.ownerId==currentUser.id">
+                                <div class="message-container accent-background color-white">
+                                    <span>{{message.sentMessage}}</span>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="message-bar" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+            <textarea class="text-bar" [(ngModel)]="message" matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="3"></textarea>
+            <button mat-mini-fab color="accent" (click)="sendMessage()">
+                <mat-icon>send</mat-icon>
+            </button>
+        </div>
     </section>
     <section fxFlex="20" fxLayout="column" class="messages">
         <h3 class="accent-color">Users</h3>
         <mat-nav-list>
-            <mat-list-item *ngFor="let user of userList">
+            <mat-list-item *ngFor="let user of userList" (click)="selectUser(user)">
                 <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
                     <img class="avatar" src="../../../../assets/images/avatar.jpg" alt="">
                     <span class="user-name">{{user.firstName}} {{user.lastName}}</span>
@@ -19,3 +46,11 @@
         </mat-nav-list>
     </section>
 </div>
+
+<ng-template #profile>
+    <div class="" fxLayoutAlign="start center" fxLayout="column" fxLayoutGap="15px">
+        <img class="profile-img" src="../../../../assets/images/avatar.jpg" alt="">
+        <span class="name" *ngIf="selectedUser">{{selectedUser.firstName}} {{selectedUser.lastName}}</span>
+        <span *ngIf="selectedUser">{{selectedUser.mail}}</span>
+    </div>
+</ng-template>

@@ -35,7 +35,9 @@ $accent-color: map-get($custom-theme, accent);
 .accent-color{
   color: mat-color($accent-color, default);
 }
-
+.accent-background{
+  background-color: mat-color($accent-color, default);
+}
 .color-white-override{
   color: white !important;
 }
