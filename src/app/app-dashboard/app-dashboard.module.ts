@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedMaterialModule } from '@shared-material/shared-material.module';
 import { MatListModule } from "@angular/material/list";
 import { TextFieldModule } from "@angular/cdk/text-field";
-import { FormsModule } from '@angular/forms';
+import { FormsMaterialModule } from '@shared-material/forms-material.module';
 
 const routes: Routes = [
   {
@@ -24,7 +24,7 @@ const routes: Routes = [
     SharedMaterialModule,
     MatListModule,
     TextFieldModule,
-    FormsModule,
+    FormsMaterialModule,
     RouterModule.forChild(routes),
   ],
 })

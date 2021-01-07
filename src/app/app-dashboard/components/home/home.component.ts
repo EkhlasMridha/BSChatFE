@@ -58,6 +58,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  createForm() {
+
+  }
+
   getUserList() {
     return this.chatBoxService.getUserList().pipe(
       tap(res => {
