@@ -2,8 +2,15 @@
     <section style="padding-right: 10px;" fxFlex="20" class="messages" fxLayout="column">
         <h3 class="accent-color">Old messages</h3>
         <div fxLayout="column" fxLayoutGap="10px" *ngIf="oldMessages">
-            <div fxLayout="row" class="message-name" *ngFor="let old of oldMessages">
-                <span class="">Name</span>
+            <div fxLayout="row" fxLayoutAlign="start start" class="message-name cursor-pointer"
+                *ngFor="let old of oldMessages">
+                <div class="message-hover full-width" fxLayout="column" fxLayoutGap="5px" (click)="selectMessage(old)">
+                    <span class="accent-color" *ngIf="old.name">{{old.name.firstName}} {{old.name.lastName}}</span>
+                    <span class="old-msg gray-color">{{old.textMessages[old.textMessages.length-1].sentMessage}}</span>
+                </div>
+                <button mat-icon-button (click)="deleteMessage(old)">
+                    <mat-icon>delete</mat-icon>
+                </button>
             </div>
         </div>
     </section>

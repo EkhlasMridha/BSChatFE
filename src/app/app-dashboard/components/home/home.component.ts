@@ -2,12 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageGroup } from '@contract/message-group.model';
+import { OldMessageModel } from '@contract/old-message.model';
 import { SharedMessageModel } from '@contract/shared-message.model';
 import { TextMessageModel } from '@contract/text-message.model';
 import { UserModel } from '@contract/user.model';
 import { CoreService } from '@core/core.service';
 import { DataStateService } from '@core/servcies/data-state.service';
 import { SignalrService } from '@core/services/signalr.service';
+import { forkJoin } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { ChatBoxService } from '../../services/chat-box.service';
 
@@ -24,7 +26,7 @@ export class HomeComponent implements OnInit {
   message: string;
   messageGroup: MessageGroup;
   messageList: Partial<TextMessageModel>[] = [];
-  oldMessages: MessageGroup[];
+  oldMessages: Partial<OldMessageModel>[];
   id: number;
   groupId: number;
 
@@ -43,9 +45,10 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.signalRService.startConnection();
     this.listenToMessage();
-    this.getUserList();
+    // this.getUserList();
+    this.initMessages();
     this.getuser();
-    this.getOldMessages();
+    // this.getOldMessages();
     this.id = parseInt(this.route.snapshot.queryParams.id);
     this.getSelectedUser(this.id);
   }
@@ -57,7 +60,7 @@ export class HomeComponent implements OnInit {
   }
 
   getUserList() {
-    this.chatBoxService.getUserList().pipe(
+    return this.chatBoxService.getUserList().pipe(
       tap(res => {
         if (!this.selectedUser && this.id) {
           this.selectedUser = res.find(res => {
@@ -65,12 +68,28 @@ export class HomeComponent implements OnInit {
               return res;
             }
           });
-          console.log(this.selectedUser);
+          // console.log(this.selectedUser);
         }
+        this.userList = res;
       })
-    ).subscribe(res => {
-      this.userList = res;
-      console.log(res);
+    );
+    // .subscribe(res => {
+    //   this.userList = res;
+    //   console.log(res);
+    // });
+  }
+
+  initMessages() {
+    let messageInit = [this.getUserList(), this.getOldMessages()];
+    forkJoin(messageInit).subscribe(res => {
+      this.oldMessages.map(res => {
+        if (res.senderId == this.currentUser.id) {
+          res.name = this.userList.find(user => user.id == res.receiverId);
+        } else if (res.receiverId == this.currentUser.id) {
+          res.name = this.userList.find(user => user.id == res.senderId);
+        }
+      });
+      console.log(this.oldMessages);
     });
   }
 
@@ -170,9 +189,21 @@ export class HomeComponent implements OnInit {
   }
 
   getOldMessages() {
-    this.chatBoxService.getOldMessages().subscribe(res => {
-      this.oldMessages = res;
-      console.log(this.oldMessages);
+    return this.chatBoxService.getOldMessages().pipe(
+      tap(res => {
+        this.oldMessages = res;
+      })
+    );
+  }
+
+  deleteMessage(old: OldMessageModel) {
+    this.chatBoxService.deleteMessageGroup(old).subscribe(res => {
+      let index = this.oldMessages.indexOf(old);
+      this.oldMessages.splice(index, 1);
     });
+  }
+
+  selectMessage(old: OldMessageModel) {
+    console.log("Selecct");
   }
 }

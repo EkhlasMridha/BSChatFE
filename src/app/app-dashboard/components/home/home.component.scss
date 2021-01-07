@@ -63,6 +63,13 @@ h3{
   border-radius: 4px 4px 0px 0px;
   background-color: #242424;
 }
+.message-hover:hover{
+  background-color: #afafaf;
+}
+
+.old-msg{
+  font-size: 12px;
+}
 
 .message-bar{
   display: flex;

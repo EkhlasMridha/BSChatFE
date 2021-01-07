@@ -52,4 +52,8 @@ export class ChatBoxService {
   createGroup(payload) {
     return this.http.post<MessageGroup>("chat/create", payload);
   }
+
+  deleteMessageGroup(payload) {
+    return this.http.post("chat/delete", payload);
+  }
 }
