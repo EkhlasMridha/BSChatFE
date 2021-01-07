@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   oldMessages: Partial<OldMessageModel>[];
   id: number;
   groupId: number;
+  newMesasge: MessageGroup[] = [];
 
   @ViewChild('textContainer') private textContainer: ElementRef;
   constructor (
@@ -45,15 +46,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.signalRService.startConnection();
     this.listenToMessage();
-    // this.getUserList();
     this.initMessages();
     this.getuser();
-    // this.getOldMessages();
     this.id = parseInt(this.route.snapshot.queryParams.id);
     this.getSelectedUser(this.id);
   }
 
-  ngAfterContentChecked(): void {
+  ngAfterViewChecked(): void {
     if (this.textContainer) {
       this.textContainer.nativeElement.scrollTop = this.textContainer.nativeElement.scrollHeight;
     }
@@ -68,15 +67,10 @@ export class HomeComponent implements OnInit {
               return res;
             }
           });
-          // console.log(this.selectedUser);
         }
         this.userList = res;
       })
     );
-    // .subscribe(res => {
-    //   this.userList = res;
-    //   console.log(res);
-    // });
   }
 
   initMessages() {
@@ -95,12 +89,11 @@ export class HomeComponent implements OnInit {
 
   listenToMessage() {
     this.signalRService.chat.subscribe(res => {
-      // console.log(res);
-      // console.log(this.currentUser);
-      // console.log(this.selectedUser);
       if (res.senderId == this.currentUser.id || res.senderId == this.selectedUser.id) {
         this.messageGroup.textMessages.push(res.textMessages);
         this.messageList.push(res.textMessages[0]);
+      } else {
+        this.newMesasge.push(res);
       }
     });
   }
@@ -146,7 +139,6 @@ export class HomeComponent implements OnInit {
       this.sendMessageWithgroup(group).subscribe(res => {
         this.messageGroup.textMessages = [];
         this.messageGroup.textMessages.push(res);
-        //this.messageList.push(res);
       });
     } else {
       this.chatBoxService.sendMessage("text", group).subscribe(res => {
@@ -203,7 +195,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  selectMessage(old: OldMessageModel) {
-    console.log("Selecct");
+  selectMessage(message: MessageGroup) {
+    this.selectedUser = this.userList.find(user => user.id == message.textMessages[message.textMessages.length - 1].ownerId);
+    this.router.navigate(["."], { relativeTo: this.route, queryParams: { id: this.selectedUser.id } });
+    this.id = this.selectedUser.id;
+
+    this.getSelectedUser(this.selectedUser.id);
+    let index = this.newMesasge.indexOf(message);
+    this.newMesasge.splice(index, 1);
   }
 }
