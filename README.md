@@ -2,19 +2,30 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
 
-## Project setup
-###### Installing angular
-Install angular by running `npm install -g @angular/cli` command on terminal or command prompt. If you don't have npm or any package manager installed on you system you have to install it at first.
+## Installing angular
+* We need npm package manager to setup everything. Visit [Nodejs](https://nodejs.org/en/) , download and install nodejs which will install npm package manager with it.
+* Now install angular cli by running `npm install -g @angular/cli` command on terminal or command prompt on your machine. Visit [Angular CLI](https://cli.angular.io/) for detail.
 
+## Install git
+Download and install [git](https://git-scm.com/downloads). We need git to work with the repository.
+
+## Project setup
 ###### Download tools
-I like to use Visual studio code here, but we can use any dev friendly text editor. You can download the Visual studio code from [here](https://visualstudio.microsoft.com/downloads/)
+I prefer Visual studio code, but we can use any dev friendly text editor. 
+* Download and install [Visual studio code](https://visualstudio.microsoft.com/downloads/)
+
+###### Cloning the project on local machine
+* Open command prompt or terminal on a directory.
+* Run command `git clone https://github.com/EkhlasMridha/BSChatFE.git` on the terminal to clone the project on that directory.
 
 ###### Installing packages
-Open the BSChatFE project directory with VS code. Click on terminal on the top toolbar and a terminal will open on the bottom side of VS code. Run command `npm install`. This will take some time to install the necessary packages and libraries.
+* Open the BSChatFE project with VS code.
+* Click on terminal on the top toolbar
+* A terminal will open on the bottom side of VS code. Run command `npm install` on terminal to install the packages. (This may take some time).
 
-## Development server
+## Run the project on Development server
 
-After the package has been installed run `npm start` or `ng serve` to run the project on a dev server. Navigate to `http://localhost:4200/` on your browser. The app will automatically reload if you change any of the source files.
+After the package has been installed run `npm start` or `ng serve` on the terminal to run the project on a dev server. Navigate to [http://localhost:4200/](http://localhost:4200/) on your browser.
 
 ## Build
 
